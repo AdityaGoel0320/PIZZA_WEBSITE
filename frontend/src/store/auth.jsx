@@ -4,46 +4,29 @@ import { backendUrl } from "../assets/FrontendUtils";
 export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
-
-
-  // now for isLoading statein getting and updating any api request
-
-  const [isLoading, setisLoading] = useState(true)
-
-
-
-  const [jwtToken, setjwtToken] = useState(localStorage.getItem("jwtToken"))
-
+  const [isLoading, setisLoading] = useState(true);
+  const [jwtToken, setjwtToken] = useState(localStorage.getItem("jwtToken"));
   const [userLoginedData, setuserLoginedData] = useState("");
-
-
-  const [serviceData, setserviceData] = useState([])
-
-  const AuthorisationToken  = `Bearer ${jwtToken}` ; 
+  const [serviceData, setserviceData] = useState([]);
+  const AuthorisationToken = `Bearer ${jwtToken}`;
 
   let storeTokenInLS = (jwtGivenToken) => {
-    console.log("token stored in local storage")
-    setjwtToken(jwtGivenToken)
-    return localStorage.setItem("jwtToken", jwtGivenToken)
-
-  }
+    console.log("Token stored in local storage:", jwtGivenToken);
+    setjwtToken(jwtGivenToken);
+    return localStorage.setItem("jwtToken", jwtGivenToken);
+  };
 
   let logoutUserFnc = () => {
-    setjwtToken("")
+    setjwtToken("");
     setuserLoginedData("");
-
-    
-    return localStorage.removeItem("jwtToken")
-  }
-
+    return localStorage.removeItem("jwtToken");
+  };
 
   let isLoggedIn = !!jwtToken;
 
-
-  // function to check the user Authentication or not
   const userAuthentication = async () => {
     try {
-      let url = `${backendUrl}/api/auth/user`
+      let url = `${backendUrl}/api/auth/user`;
       const response = await fetch(url, {
         method: "GET",
         headers: {
@@ -51,59 +34,70 @@ export const AuthProvider = ({ children }) => {
         },
       });
 
+      console.log("Authorization Header:", `Bearer ${jwtToken}`);
+
       if (response.ok) {
         const data = await response.json();
-
-        // our main goal is to get the user data 👇
         setuserLoginedData(data.userData);
-        setisLoading(false) ; 
+        setisLoading(false);
       } else {
-        console.error("Error fetching user data");
-        setuserLoginedData("")
-        setisLoading(false) ; 
+        console.error("Error fetching user data 22222");
+        setuserLoginedData("");
+        setisLoading(false);
       }
     } catch (error) {
       console.log(error);
     }
   };
 
-
-
   let getServiceFnc = async () => {
     try {
-      let url = `${backendUrl}/api/data/service`
+      let url = `${backendUrl}/api/data/service`;
       const response = await fetch(url, {
         method: "GET",
       });
 
       if (response.ok) {
         const data = await response.json();
-        setserviceData(data.response); // Update state with the array of objects
+        setserviceData(data.response);
       } else {
-        console.error("Error fetching user data");
+        console.error("Error fetching service data");
       }
     } catch (error) {
       console.log(error);
     }
-  }
+  };
 
   useEffect(() => {
     getServiceFnc();
     userAuthentication();
-  }, []);
+  }, [jwtToken]);
 
   useEffect(() => {
-    console.log(serviceData); // Log updated serviceData whenever it changes
+    console.log("Retrieved token from local storage:", jwtToken);
+  }, [jwtToken]);
+
+  useEffect(() => {
+    console.log("Service Data:", serviceData);
   }, [serviceData]);
 
-
-  return <AuthContext.Provider value={{  AuthorisationToken ,  isLoggedIn, storeTokenInLS, logoutUserFnc, userLoginedData, serviceData  , isLoading}}>
-    {children}
-  </AuthContext.Provider>
-}
-
-
+  return (
+    <AuthContext.Provider
+      value={{
+        AuthorisationToken,
+        isLoggedIn,
+        storeTokenInLS,
+        logoutUserFnc,
+        userLoginedData,
+        serviceData,
+        isLoading,
+      }}
+    >
+      {children}
+    </AuthContext.Provider>
+  );
+};
 
 export const useAuthContextApi = () => {
   return useContext(AuthContext);
-}
+};

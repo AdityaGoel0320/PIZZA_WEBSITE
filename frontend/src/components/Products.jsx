@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import ProductList from '../components/ProductList';
-import CategoryArray from '../components/smallNavbar';
-import arr from '../components/arr';
-import AnimatedGradients from '../components/Animation';
+import ProductList from './ProductList';
+import CategoryArray from './smallNavbar';
+import arr from './arr';
+import AnimatedGradients from './Animation';
 
 
 import { useFavContextApi } from '../store/fav'

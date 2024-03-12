@@ -3,7 +3,7 @@ import ProductList from '../components/ProductList'
 import { NavLink } from 'react-router-dom';
 import CategoryArray from '../components/smallNavbar';
 import arr from '../components/arr';
-import Hero from './Hero';
+import Hero from '../components/Hero';
 import AnimatedGradients from '../components/Animation';
 import { useAuthContextApi } from '../store/auth';
 import { backendUrl } from '../assets/FrontendUtils';

@@ -2,23 +2,23 @@ import React, { createContext, useReducer } from 'react';
 import { Route, Routes } from 'react-router-dom';
 
 import './App.css';
-import Products from './pages/Products';
-import Home from './pages/Main';
-import Cart from './pages/Cart';
-import About from './pages/About';
-import SingleItemPage from './pages/SingleItemPage';
+import Products from './components/Products';
+import Home from './components/Main';
+import Cart from './components/Cart';
+import About from './components/About';
+import SingleItemPage from './components/SingleItemPage';
 import BottomNav from './components/BottomNav';
-import ErrorPage from './pages/ErrorPage';
+import ErrorPage from './components/ErrorPage';
 import Sample from './components/Sample';
 import CircleWithCompanion from './components/Icon';
 
 
-import LoginPage from './pages/Login';
-import RegisterPage from './pages/Register';
-import AboutPage from './pages/AboutPage';
+import LoginPage from './components/Login';
+import RegisterPage from './components/Register';
+import AboutPage from './components/AboutPage';
 import { backendUrl } from './assets/FrontendUtils';
-import Logout from './pages/Logout';
-import ContactPage from './pages/ContactPage';
+import Logout from './components/Logout';
+import ContactPage from './components/ContactPage';
 import SocialLinks from './components/Social';
 
 

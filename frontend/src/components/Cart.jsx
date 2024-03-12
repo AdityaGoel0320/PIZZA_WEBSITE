@@ -1,6 +1,6 @@
 import React from 'react';
 import { useCartContextApi } from '../store/cartContext';
-import ItemCart from '../components/ItemCart';
+import ItemCart from './ItemCart';
 
 const Cart = () => {
   const { cart, totalItem, totalAmount, shipping_fee, addToCart, removeItem, clearCart, increment, decrement } =

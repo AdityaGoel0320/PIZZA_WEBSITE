@@ -1,5 +1,5 @@
 import React from 'react';
-import arr from '../components/arr';
+import arr from './arr';
 import { useParams, NavLink, useNavigate } from 'react-router-dom';
 
 const SingleItemPage = () => {

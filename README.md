@@ -1,4 +1,3 @@
-Here's the README file formatted as requested:
 
 ---
 

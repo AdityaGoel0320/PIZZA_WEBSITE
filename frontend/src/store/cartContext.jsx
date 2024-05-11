@@ -3,7 +3,6 @@ import { CartReducer } from "../Reducer/CartReducer";
 
 export const CartContext = createContext();
 
-
 let getLocalCartData = () => {
   let preSavedCart = localStorage.getItem("preSavedCart")
   if (preSavedCart == null) {
@@ -13,6 +12,7 @@ let getLocalCartData = () => {
     return JSON.parse(preSavedCart);
   }
 }
+
 let initialState = {
   cart: getLocalCartData(),
   totalItem: 0,
@@ -86,7 +86,6 @@ export const CartProvider = ({ children }) => {
       value={{
         ...state,
         addToCart,
-        cart: state.cart,
         removeItem,
         clearCart,
         increment,

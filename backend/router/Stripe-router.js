@@ -2,58 +2,10 @@ let dotenv = require("dotenv");
 dotenv.config({ path: "./config.env" });
 
 let express = require("express");
-let app = express();
-let PORT = process.env.PORT || 5000;
-let cors = require("cors")
-const { frontendUrl } = require("./assets/BackendUtils");
+let router = express.Router();
 const stripe = require('stripe')("sk_test_51PAB7OSHK6BpruzqSLSxnWwaUBjJPmT02Qp9RWAKf0U0tp9p8qQ5DfkaDpgsjBbbbWVpsRwufsffKqEtnrCOmQ4200DuXg2j2E");
 
-
-const corsOptions = {
-    origin: `${frontendUrl}`, // or an array of allowed origins
-    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-    credentials: true,
-    optionsSuccessStatus: 204,
-};
-
-app.use(cors(corsOptions));
-
-let authRoute = require("./router/auth-router");
-let contactRoute = require("./router/contact-router");
-let serviceRoute = require("./router/service-router");
-let adminRoute = require("./router/admin-router");
-let stripeRoute = require("./router/Stripe-router");
-const errorMiddleWare = require("./middleware/error-middleware");
-// const errorMiddleWare = require("./middleware/error-middleware");
-
-// Log checkpoint to ensure this code block is reached
-console.log("Checkpoint 1");
-
-
-
-app.use(express.json());
-
-// Log checkpoint to ensure this code block is reached
-console.log("Checkpoint 2");
-
-app.use("/api/form", contactRoute);
-
-app.use("/api/auth", authRoute);
-app.use("/api/data", serviceRoute);
-app.use("/api/admin", adminRoute);
-
-// Log checkpoint to ensure this code block is reached
-console.log("Checkpoint 3");
-
-require("./db/conn");
-
-// Log checkpoint to ensure this code block is reached
-console.log("Checkpoint 4");
-
-
-
-app.post("/api/create-checkout-session", async (req, res) => {
-
+router.post("/create-checkout-session", async (req, res) => {
     try {
         const { products } = req.body;
 
@@ -74,7 +26,7 @@ app.post("/api/create-checkout-session", async (req, res) => {
                         name: product.name,
                         images: [product.image],
                     },
-                    unit_amount: product.price, // Stripe requires price in cents
+                    unit_amount: 1, // Stripe requires price in cents
                 },
                 quantity: product.quantity,
             };
@@ -96,7 +48,7 @@ app.post("/api/create-checkout-session", async (req, res) => {
             success_url: 'http://localhost:5173/success', // Redirect URL after successful payment
             cancel_url: 'http://localhost:5173/cancel', // Redirect URL if payment is cancelled
         });
-
+        
 
         // Return the session ID to the client
         res.json({ id: session.id });
@@ -104,15 +56,6 @@ app.post("/api/create-checkout-session", async (req, res) => {
         console.error("Error:", error);
         res.status(500).send("Error processing payment.");
     }
-
-}
-
-);
-
-
-
-app.use(errorMiddleWare);
-
-app.listen(PORT, () => {
-    console.log(`Backend running on port ${PORT}`);
 });
+
+module.exports = router;

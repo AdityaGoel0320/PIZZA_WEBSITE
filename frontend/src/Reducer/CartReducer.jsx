@@ -40,6 +40,10 @@ export const CartReducer = (state, action) => {
     if (action.type === "CLEAR_CART") {
 
         console.log("Dsafdsfdfgdjsgudsgfugf")
+        console.log("Dsafdsfdfgdjsgudsgfugf")
+        console.log("Dsafdsfdfgdjsgudsgfugf")
+        console.log("Dsafdsfdfgdjsgudsgfugf")
+        console.log("Dsafdsfdfgdjsgudsgfugf")
       let CartArray = state.cart ? [...state.cart] : [];
 
       return {

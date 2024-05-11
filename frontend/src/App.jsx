@@ -20,6 +20,8 @@ import { backendUrl } from './assets/FrontendUtils';
 import Logout from './components/Logout';
 import ContactPage from './components/ContactPage';
 import SocialLinks from './components/Social';
+import SuccesFullPayment from './components/SuccesFullPayment';
+import ErrorTransaction from './components/ErrorTransaction';
 
 
 export const UserContext = createContext();
@@ -40,6 +42,8 @@ const App = () => {
         <Route exact path="/contact" element={<ContactPage />} />
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/login" element={<LoginPage />} />
+        <Route path="/success" element={<SuccesFullPayment/>} />
+        <Route path="/cancel" element={<ErrorTransaction/>} />
         <Route exact path="/products" element={<Products />} />
         <Route exact path="/products/:_id" element={<SingleItemPage />} />
         <Route exact path="/cart" element={<Cart />} />
